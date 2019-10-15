@@ -1,0 +1,48 @@
+<h2>Query: {{ query_string }}</h2>
+<h3>Time elapsed: {{runtime}}</h3>
+<h2>Results:</h2> 
+
+<style>
+.hl {
+	background: yellow;
+}
+.result_table .result_row {
+	border: 1px solid black;
+	background: lightblue;
+	margin: 10px 0px;
+}
+
+.score_table {
+	width: 100%;
+}
+.score_table th,
+.score_table td {
+	border: 1px solid black;
+	text-align: center;
+}
+.score_table .col_token {
+	width: 10%;
+}
+.score_table .col_tf,
+.score_table .col_idf,
+.score_table .col_tf_idf {
+	width: 30%;
+}
+
+</style>
+
+<table class="result_table">
+	{% for result in res %}
+	<tr class="result_row">
+		<td>
+			<img src={{ result['poster'] }} style="height: 250px">
+		</td>
+		<td>
+			<h2>{{ result['title_eng'] | safe }}</h2>
+			<h3>{{ result['title_orig'] }}</h3>
+			<p>{{ result['overview'] | safe }}</p>
+			{{ result['score_table'] | safe }}
+		</td>
+	</tr>
+	{% endfor %} 
+</table>

@@ -1,0 +1,25 @@
+.hl {
+	background: yellow;
+}
+.result_table .result_row {
+	border: 1px solid black;
+	background: lightblue;
+	margin: 10px 0px;
+}
+
+.score_table {
+	width: 100%;
+}
+.score_table th,
+.score_table td {
+	border: 1px solid black;
+	text-align: center;
+}
+.score_table .col_token {
+	width: 10%;
+}
+.score_table .col_tf,
+.score_table .col_idf,
+.score_table .col_tf_idf {
+	width: 30%;
+}
