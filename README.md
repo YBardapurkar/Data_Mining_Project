@@ -1,13 +1,13 @@
-#Data Mining Term Project (Fall 2019)
-#Movie Search and Classifier
+# Data Mining Term Project (Fall 2019)
+# Movie Search and Classifier
 
 [Link to Portfolio](https://yashbardapurkar.uta.cloud/portfolio/data-mining-project.html)
 
 [Link to PythonAnywhere demo](https://ybardapurkar.pythonanywhere.com)
 
-##Phase 1: Movie Search
+## Phase 1: Movie Search
 
-###Setup on PythonAnywhere
+### Setup on PythonAnywhere
 
 1. Create an account on PythonAnywhere
 2. Open up a bash console
@@ -18,7 +18,7 @@
 7. Open the WSGI configuration file, set the path variable as `path = '/home/yourname/Data_Mining_Project'` and uncomment the relevant parts under the heading "Flask". Change the last line to `from hello import app as application`, as currently the name of our main file is `hello.py`
 8. Reload the web app, and it should be available at `https://yourname.pythonanywhere.com`.
 
-###Setup on localhost
+### Setup on localhost
 
 1. Open up a bash console
 2. Type in `git clone https://github.com/YBardapurkar/Data_Mining_Project.git`
