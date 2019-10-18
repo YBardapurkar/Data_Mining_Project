@@ -1,7 +1,7 @@
 # Data Mining Term Project (Fall 2019)
 # Movie Search and Classifier
 
-[Link to Portfolio](https://yashbardapurkar.uta.cloud/portfolio/data-mining-project.html)
+[Link to Portfolio](https://ybardapurkar.github.io/Data_Mining_Project/project-proposal.html)
 
 [Link to PythonAnywhere demo](https://ybardapurkar.pythonanywhere.com)
 
