@@ -70,15 +70,18 @@ class Search:
 	def init(self):
 		length = len(self.data)
 
-		file_unique_tokens = open('file_unique_tokens.pkl', 'rb')
-		file_postings = open('file_postings.pkl', 'rb')
-		file_document_frequency = open('file_document_frequency.pkl', 'rb')
-		file_lengths = open('file_lengths.pkl', 'rb')
+		# only when read pkl file, otherwise comment
+		file_unique_tokens = open('search_file_unique_tokens.pkl', 'rb')
+		file_postings = open('search_file_postings.pkl', 'rb')
+		file_document_frequency = open('search_file_document_frequency.pkl', 'rb')
+		file_lengths = open('search_file_lengths.pkl', 'rb')
+		# ^
 
 		for index, row in self.data.iterrows():
 			# if index == 500:
 			# 	break
 
+			# only when read pkl file, otherwise comment
 			data = pickle.load(file_unique_tokens)
 			self.unique_tokens = data
 			data = pickle.load(file_postings)
@@ -89,6 +92,7 @@ class Search:
 			self.lengths = data
 			print('skip read')
 			break
+			# ^
 
 			document = row['overview']
 			title = row['title']
@@ -119,33 +123,37 @@ class Search:
 			self.progress.progress_track(index, length)
 		print()
 
-		# file_unique_tokens = open('file_unique_tokens', 'wb')
-		# file_postings = open('file_postings', 'wb')
-		# file_document_frequency = open('file_document_frequency', 'wb')
-		# file_lengths = open('file_lengths', 'wb')
+		# only when writing pkl file, otherwise comment
+		# file_unique_tokens = open('search_file_unique_tokens.pkl', 'wb')
+		# file_postings = open('search_file_postings.pkl', 'wb')
+		# file_document_frequency = open('search_file_document_frequency.pkl', 'wb')
+		# file_lengths = open('search_file_lengths.pkl', 'wb')
 
 		# pickle.dump(self.unique_tokens, file_unique_tokens)
 		# pickle.dump(self.postings, file_postings)
 		# pickle.dump(self.document_frequency, file_document_frequency)
 		# pickle.dump(self.lengths, file_lengths)
-
-		# file_unique_tokens.close()
-		# file_postings.close()
-		# file_document_frequency.close()
-		# file_lengths.close()
+		# ^
+		
+		file_unique_tokens.close()
+		file_postings.close()
+		file_document_frequency.close()
+		file_lengths.close()
 
 
 	def calculate_tf(self, query_string):
 		query_tokens = self.stem_tokenize(query_string)
 		tf_scores = {}
 		for token in query_tokens:
+			try:
+				for image_id in self.postings[token]:
 
-			for movie_id in self.postings[token]:
+					if image_id not in tf_scores:
+						tf_scores[image_id] = {}
 
-				if movie_id not in tf_scores:
-					tf_scores[movie_id] = {}
-
-				tf_scores[movie_id][token] = self.postings[token][movie_id] / self.lengths[movie_id]
+					tf_scores[image_id][token] = self.postings[token][image_id] / self.lengths[image_id]
+			except:
+				print('')
 		return tf_scores
 
 

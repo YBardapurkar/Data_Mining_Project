@@ -1,0 +1,77 @@
+<!doctype html>
+<style>
+	.hl {
+		background: yellow;
+	}
+	.prob_table {
+		width: 100%;
+	}
+
+	.prob_table tr {
+		background: lightblue;
+	}
+	.prob_table th,
+	.prob_table td {
+		border: 1px solid black;
+		text-align: center;
+	}
+
+</style>
+
+<h1>Classifier</h1>
+<form action="/classify" method="post">
+	<input type="text" name="query_string" value="{{ query_string }}">
+	<input type="submit" name="submit" value="Classify">
+</form>
+
+<h2>Results:</h2>
+<h3>Time elapsed: {{ runtime }}</h3>
+<button onclick="toggleDiv()">Toggle Probabilities</button>
+<div id="prob_div" style="display: none">{{ term_prob_table | safe }}</div>
+
+<div id="genreChart" style="height: 600px" />
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load('current', {packages: ['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+
+
+	var showDiv = false;
+	function toggleDiv() {
+		if (showDiv) {
+			document.getElementById('prob_div').style.display = "block";
+		} else {
+			document.getElementById('prob_div').style.display = "none";
+		}
+		showDiv = !showDiv;
+	}
+
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			["Genre", "Match %"],
+			{% for item in res %}
+				{{ item | safe }},
+			{% endfor %}
+		]);
+
+		var view = new google.visualization.DataView(data);
+		view.setColumns([0, 1,
+			{ calc: "stringify",
+			sourceColumn: 1,
+			type: "string",
+			role: "annotation" }
+		]);
+
+		var options = {
+			title: 'Predicted Genres',
+			width: 1200,
+			height: 600,
+			legend: { position: "none" },
+		};
+
+		// Instantiate and draw the chart.
+		var chart = new google.visualization.BarChart(document.getElementById('genreChart'));
+		chart.draw(view, options);
+	}
+</script>

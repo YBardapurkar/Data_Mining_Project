@@ -1,0 +1,81 @@
+<!doctype html>
+<style>
+	.hl {
+		background: yellow;
+	}
+	.result_table .result_row {
+		border: 1px solid black;
+		background: lightblue;
+		margin: 10px 0px;
+	}
+
+	.score_table {
+		width: 100%;
+	}
+	.score_table th,
+	.score_table td {
+		border: 1px solid black;
+		text-align: center;
+	}
+	.score_table .col_token {
+		width: 10%;
+	}
+	.score_table .col_tf,
+	.score_table .col_idf,
+	.score_table .col_tf_idf {
+		width: 30%;
+	}
+	.score_table .col_similarity {
+		width: 70%;
+	}
+</style>
+
+<h1>Image Search</h1>
+<form action="/image_search" method="post">
+	<input type="text" name="query_string" value="{{ query_string }}">
+	<input type="submit" name="submit" value="Search">
+</form>
+
+{% if res is defined %}
+ 
+<h2>Results:</h2>
+<h3>Time elapsed: {{ runtime }}</h3>
+
+{% if res | length > 0 %}
+<table class="result_table">
+	{% for result in res %}
+	<tr class="result_row">
+		<td>
+			<img src={{ result['url'] }} style="height: 250px">
+		</td>
+		<td>
+			<h2 class="mark_here">{{ result['caption'] | safe }}</h2>
+			{{ result['score_table'] | safe }}
+			{{ result['similarity_table'] | safe }}
+		</td>
+	</tr>
+	{% endfor %} 
+</table>
+{% else %}
+<h3>No results found</h3>
+{% endif %}
+
+{% endif %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/7.0.0/mark.min.js"></script>
+<script type="text/javascript">
+
+		var tokens = {{ query_tokens | safe }} ;
+		x = document.querySelectorAll(".mark_here");
+		for (i = 0; i < x.length; i++) {
+			var instance = new Mark(x[i]);
+
+			instance.mark(tokens, {
+				accuracy: {
+					value: "exactly",
+					// limiters: [".", ",", "!", ""]
+				}
+			});
+		}
+
+</script>
