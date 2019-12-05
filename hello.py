@@ -2,7 +2,6 @@ from datetime import datetime
 from flask import Flask, render_template, request
 from search import Search
 from naivebayes import NaiveBayes
-from naivebayestrain import NaiveBayesTrain
 from imagesearch import ImageSearch
 from sklearn.model_selection import train_test_split
 
@@ -23,7 +22,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-	return '<a href="/search">Search</a><a href="/classify">Classify</a>'
+	return '<a href="/search">Search</a><br><a href="/classify">Classify</a><br><a href="/image_search">Image Search</a>'
 
 
 @app.route("/search", methods = ['GET'])
