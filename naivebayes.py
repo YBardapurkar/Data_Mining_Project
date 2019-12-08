@@ -184,7 +184,7 @@ class NaiveBayes:
 
 		# print(query_prob_counter)
 		res = []
-		for item in query_prob_counter.most_common():
+		for item in query_prob_counter.most_common(6):
 			# print(item[0] + ' : ' + str(item[1] / prob_sum))
 			res.append([item[0], item[1] / prob_sum * 100])
 

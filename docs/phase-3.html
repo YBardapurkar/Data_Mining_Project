@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+
+	<!--- basic page needs
+   	================================================== -->
+	<meta charset="utf-8">
+	<title>Data Mining Term Project Proposal (Fall 2019) - Yash Bardapurkar</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- mobile specific metas
+   	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+ 		================================================== -->
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/vendor.css">
+
+	<!-- script
+   	================================================== -->
+	<!-- <script src="js/modernizr.js"></script> -->
+	<!-- <script src="js/pace.min.js"></script> -->
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+
+	<!-- favicons
+   	================================================== -->
+	<!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+
+</head>
+
+<body>
+
+	<section class="project">
+		<h1>Data Mining Term Project (Fall 2019)</h1>
+
+		<h1>Movie Search and Classifier</h1>
+
+		<h2>Phase 3: Image Search</h2>
+
+		<a href="https://ybardapurkar.pythonanywhere.com/image_search" target="_blank">Demo Link</a><br>
+		<a href="https://github.com/YBardapurkar/Data_Mining_Project" target="_blank">GitHub Link</a><br>
+		<br>
+
+		<b>Dataset</b><br>
+		<a href="https://www.kaggle.com/hsankesara/flickr-image-dataset" target="_blank">https://www.kaggle.com/hsankesara/flickr-image-dataset</a><br>
+		<br>
+
+		<b>Pre-processing</b><br>
+		The dataset contains 30000 images. For this project, I have selected 2000 images to generate captions.<br>
+		I am using PorterStemmer and stopwords from nltk package to decreaes the number of unique tokens in the dictionary.<br> 
+		The dictionary is of the format:<br>
+		<br>
+
+		<b>Image Captioning</b><br>
+		Image captioning is generating textual description or caption for an image. The model architecture being used is similar to Neural Image Caption Generation with Visual Attention. This uses tf.keras and eager execution. <br>
+		<br>
+		Captions are generated using TensorFlow in google Colab, using <a href="https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/contrib/eager/python/examples/generative_examples/image_captioning_with_attention.ipynb">this</a> code<br>
+		The notebook will download the MS-COCO dataset, preprocess and cache a subset of the images using Inception V3, train an encoder-decoder model, and use it to generate captions on new images.<br>
+		<br>
+
+		<b>Contributions</b><br>
+		Modified the code to create a csv file containing the image url and caption for each image in the dataset. Then, implemented the text search functionality on the captions, as described in <a href="phase-1.html">phase 1</a> to return appropriate results for the search query<br>
+		<br>
+
+		<b>Challenges Faced</b><br>
+		Training the image captioning model and generating captions takes about 3 hours. There were challenges running the code on Goggle colab, such as keeping the session active for the entire duration so as to prevent disconnection and losing all data.<br>
+		<br>
+
+		<b>References</b><br>
+		<ul>
+		<li><a href="https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/contrib/eager/python/examples/generative_examples/image_captioning_with_attention.ipynb">https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/contrib/eager/python/examples/generative_examples/image_captioning_with_attention.ipynb</a></li>
+		<li><a href="https://hackernoon.com/begin-your-deep-learning-project-for-free-free-gpu-processing-free-storage-free-easy-upload-b4dba18abebc">https://hackernoon.com/begin-your-deep-learning-project-for-free-free-gpu-processing-free-storage-free-easy-upload-b4dba18abebc</a></li>
+		<li><a href="https://www.tensorflow.org/guide/keras">https://www.tensorflow.org/guide/keras</a></li>
+		</ul>
+
+		<b>Links to other sections of the project</b><br>
+		<ul>
+			<li><a href="project-proposal.html">Project Proposal</a></li>
+			<li><a href="phase-2.html">Phase 2: Classifier</a></li>
+			<li><a href="phase-3.html">Phase 3: Image search and Image Caption Generation</a></li>
+		</ul>
+
+	</section>
+
+	<!-- Java Script
+   	================================================== -->
+<!-- 	<script src="js/jquery-2.1.3.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script> -->
+</body>
+
+</html>

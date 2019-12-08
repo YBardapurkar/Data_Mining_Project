@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+
+	<!--- basic page needs
+   	================================================== -->
+	<meta charset="utf-8">
+	<title>Data Mining Term Project Proposal (Fall 2019) - Yash Bardapurkar</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- mobile specific metas
+   	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+ 		================================================== -->
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/vendor.css">
+
+	<!-- script
+   	================================================== -->
+	<!-- <script src="js/modernizr.js"></script> -->
+	<!-- <script src="js/pace.min.js"></script> -->
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+
+	<!-- favicons
+   	================================================== -->
+	<!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+
+</head>
+
+<body>
+
+	<section class="project">
+		<h1>Data Mining Term Project (Fall 2019)</h1>
+
+		<h1>Movie Search and Classifier</h1>
+
+		<h2>Phase 2: Classifier</h2>
+
+		<a href="https://ybardapurkar.pythonanywhere.com/classify" target="_blank">Demo Link</a><br>
+		<a href="https://github.com/YBardapurkar/Data_Mining_Project" target="_blank">GitHub Link</a><br>
+		<br>
+
+		<b>Dataset</b><br>
+		The dataset contains metadata for 45,000 movies listed in the Full MovieLens Dataset. The dataset consists of movies released on or before July 2017. Data points include cast, crew, plot keywords, budget, revenue, posters, release dates, languages, production companies, countries etc.
+		<a href="https://www.kaggle.com/rounakbanik/the-movies-dataset" target="_blank">https://www.kaggle.com/rounakbanik/the-movies-dataset</a><br>
+		<br>
+
+		<b>Pre-processing</b><br>
+		In the pre-processing step, for each document in the dataset, we create a dictionary of the tokens in the movie plots by the genre of the movies.<br>
+		I am using PorterStemmer and stopwords from nltk package to decreaes the number of unique tokens in the dictionary.<br> 
+		The dictionary is of the format:<br>
+		<pre><code>
+genre_term_count = {
+	genre_1: {
+		token_1: 6,
+		token_2: 9, 
+		.
+		.
+	}, 
+	genre_2: {
+		token_3: 4,
+		token_4: 7, 
+		.
+		.
+	},
+	.
+	.
+}
+		</code></pre>
+		<br>
+
+		<b>Calculations</b><br>
+		We use Naive Bayes classification to classify the query based on the genre, and predict the genre of the movie described in the query.<br>
+		
+		First, the query entered by the user is tokenized, and for each query token, the probability of the token belonging to each genre is calculated. Then, probability of the query belonging to the genres is calculated, using Naive Bayes.<br>
+
+		<code>prob(genre | token_1, token_2, ..., token_n) = prob(token_1, token_2, ..., token_n | genre) * prob(genre)</code><br><br>
+
+		By the property of conditional independence, we can write the probability of the query belonging to a genre to be equal to the product of each term belonging to that genre. Hence, the probability becomes:<br>
+
+		<code>prob(genre | token_1, token_2, ..., token_n) = prob(token_1 | genre) * prob(token_2 | genre) * ..., prob(token_n | genre) * prob(genre)</code><br>
+		<br>
+		
+		<b>Accuracy</b><br>
+		To calculate the accuracy, we split the dataset into two parts - training data and testing data, using the slkearn module in python. We train the model on the training data, and use the testing data as input to the model and compare the genre results with the actual genres present in the test data.<br><br>
+		A movie can have 1 to 4 genres. We compare the top 3 to 6 (2 more than actual) predicted genres and assign a score to the result.<br>
+		For each genre in the test input, if that genre is present in the predicted genres, we increment the score by 1.<br><br>
+		Finally, we divide the score with the maximum possible score possible, to calculate the percentage accuracy of the model.<br>
+
+		<pre><code>
+for genre in actual_genres:
+	if genre in predicted_genres:
+		score += 1
+	total += 1
+accuracy = score / total
+		</code></pre>
+
+		<br>
+
+		<em>Laplace moothing</em><br>
+		A problem with this approach is that, if the user enters a query which has a token that is not present in the dataset, the probability for that token belonging to any genre is calculated to be 0, which makes the probability result as 0. To counter this, we add a smoothing parameter to each term frequency based on the following formula:<br>
+		<code>
+			prob(token | genre) = ((number of occurences of 'token' in 'genre') + <b>(parameter * prob(genre))</b>) / (total number of tokens in 'genre') + <b>(parameter)</b>) 
+		</code><br>
+		This is called Laplace Smoothing.<br><br> 
+
+		The smoothing parameter affects the output of the model, and hence, it is important to select an appropriate value for the smoothing parameter. <br>
+		<br>
+
+		I tried different smoothing parameters in the range [0.00000001 , 0.1] and calculated the accuracy using the above formula. For my dataset and accuracy calculation, I happened to achieve highest accuracy (0.8092) at smoothing parameter = 0.00001<br>
+		<img src="images/smoothing.png" style="height: 300px"><br>
+		<br>
+
+		<b>Contributions</b><br>
+		<ul>
+			<li>Tried changing the smoothing parameter and evaluated accuracyin the range [0.00000001 , 0.1] for smoothing value.</li>
+			<li>Added easy to understand visualizations in the classifier output</li>
+		</ul>
+
+		<b>Challenges Faced</b><br>
+		A big challenge faced in the project was to come up with a formula to measure the accuracy of the model.<br>
+		Since I am using the Movies dataset, each element in the dataset is associated with multiple classes (genres), and 
+		the project was run, the pre-processing step could be skipped after the initial run, and the pre-processing data would simply read from the file. This decreased the app deployment time from several minutes to a few seconds, and also solved the time-out problem in PythonAnywhere.<br>
+		<br>
+
+		<b>References</b><br>
+		<ul>
+		<li><a href="https://www.stackoverflow.com">https://www.stackoverflow.com</a></li>
+		<li><a href="https://docs.google.com/document/d/1ZsfXdsK17mNJNB9Jgl-CP4i-y70roNao1AyyS4rPPM0/edit">Class Notes from Syllabus</a></li>
+		<li><a href="https://github.com/BhaskarTrivedi/QuerySearch_Recommentation_Classification">https://github.com/BhaskarTrivedi/QuerySearch_Recommentation_Classification</a></li>
+		<li><a href="https://docs.python.org/3.4/library/pickle.html">https://docs.python.org/3.4/library/pickle.html</a></li>
+		</ul>
+
+		<b>Links to other sections of the project</b><br>
+		<ul>
+			<li><a href="project-proposal.html">Project Proposal</a></li>
+			<li><a href="phase-1.html">Phase 1: Movie Search</a></li>
+			<li><a href="phase-3.html">Phase 3: Image search and Image Caption Generation</a></li>
+		</ul>
+
+	</section>
+
+	<!-- Java Script
+   	================================================== -->
+<!-- 	<script src="js/jquery-2.1.3.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script> -->
+</body>
+
+</html>

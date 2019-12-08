@@ -24,6 +24,8 @@
 	<input type="submit" name="submit" value="Classify">
 </form>
 
+{% if res is defined %}
+
 <h2>Results:</h2>
 <h3>Time elapsed: {{ runtime }}</h3>
 <button onclick="toggleDiv()">Toggle Probabilities</button>
@@ -75,3 +77,5 @@
 		chart.draw(view, options);
 	}
 </script>
+
+{% endif %}
