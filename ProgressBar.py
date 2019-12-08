@@ -11,7 +11,7 @@ class ProgressBar:
 		str_format = "{0:.0f}"
 		percents = str_format.format(100 * (completed / float(total)))
 		filled_length = int(round(100 * completed / float(total)))
-		bar = '█' * filled_length + '-' * (100 - filled_length)
+		bar = '|' * filled_length + '-' * (100 - filled_length)
 
 		sys.stdout.write('\r |%s| %s%%' % (bar, percents)),
 

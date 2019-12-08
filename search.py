@@ -10,6 +10,9 @@ import pickle
 from ProgressBar import ProgressBar
 import re
 
+import nltk
+nltk.download('stopwords')
+
 class Search:
 
 	def __init__(self):
@@ -134,7 +137,7 @@ class Search:
 		# pickle.dump(self.document_frequency, file_document_frequency)
 		# pickle.dump(self.lengths, file_lengths)
 		# ^
-		
+
 		file_unique_tokens.close()
 		file_postings.close()
 		file_document_frequency.close()

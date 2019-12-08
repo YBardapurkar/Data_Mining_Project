@@ -10,6 +10,9 @@ import pickle
 from ProgressBar import ProgressBar
 import re
 
+import nltk
+nltk.download('stopwords')
+
 class ImageSearch:
 
 	def __init__(self):

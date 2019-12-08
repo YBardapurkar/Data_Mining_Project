@@ -10,6 +10,9 @@ from ProgressBar import ProgressBar
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
+import nltk
+nltk.download('stopwords')
+
 class NaiveBayes:
 
 	def __init__(self):

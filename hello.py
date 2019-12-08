@@ -3,10 +3,12 @@ from flask import Flask, render_template, request
 from search import Search
 from naivebayes import NaiveBayes
 from imagesearch import ImageSearch
+from imagecaption import ImageCaption
 from sklearn.model_selection import train_test_split
+from zipfile import ZipFile
 
-import pandas as pd
-import matplotlib.pyplot as plt
+with ZipFile('pre_processed_data.zip', 'r') as zipObj:
+	zipObj.extractall()
 
 search = Search();
 search.init()
@@ -16,6 +18,9 @@ naive_bayes.init()
 
 imagesearch = ImageSearch()
 imagesearch.init()
+
+image_caption = ImageCaption()
+image_caption.init()
 
 app = Flask(__name__)
 
@@ -82,6 +87,31 @@ def image_search_result():
 	total_time = (datetime.now().timestamp() - start_time)
 
 	return render_template('image_search_form.html', query_string=query_string, query_tokens=query_tokens, res=results, runtime=total_time)
+
+
+@app.route("/image_caption", methods = ['GET'])
+def image_caption_form():
+	return render_template('image_caption_form.html')
+
+
+@app.route('/image_caption', methods = ['POST'])
+def image_image_caption_result():
+	image_url = request.form['image_url']
+
+	# start
+	start_time = datetime.now().timestamp()
+
+	caption = image_caption.generate_caption(image_url)
+	results, query_tokens = imagesearch.query_image(caption)
+
+	# end
+	total_time = (datetime.now().timestamp() - start_time)
+
+	print(image_url)
+	print(caption)
+
+	return render_template('image_caption_form.html', image_url=image_url, query_tokens=query_tokens, caption=caption, related_images=results, runtime=total_time)
+
 
 if __name__ == "__main__":
 	app.run()
