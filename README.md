@@ -1,33 +1,38 @@
-# Data Mining Term Project (Fall 2019)
+# CSE 5334 - Data Mining Term Project (Fall 2019)
 # Movie Search and Classifier
 
 [Link to Project Proposal](https://ybardapurkar.github.io/Data_Mining_Project/project-proposal.html)
 
 ## Phase 1: Movie Search
 
-[Link to Phase 1 report](https://ybardapurkar.github.io/Data_Mining_Project/phase-1.html)
+[Link to Phase 1 report](https://ybardapurkar.github.io/Data_Mining_Project/phase-1.html)  
 [Link to Phase 1 demo](https://ybardapurkar.pythonanywhere.com/search)
 
 ## Phase 2: Classifier
 
-[Link to Phase 2 report](https://ybardapurkar.github.io/Data_Mining_Project/phase-2.html)
+[Link to Phase 2 report](https://ybardapurkar.github.io/Data_Mining_Project/phase-2.html)  
 [Link to Phase 2 demo](https://ybardapurkar.pythonanywhere.com/classify)
 
 ## Phase 3: Image Search and Captioning
 
-[Link to Phase 3 report](https://ybardapurkar.github.io/Data_Mining_Project/phase-3.html)
+[Link to Phase 3 report](https://ybardapurkar.github.io/Data_Mining_Project/phase-3.html)  
 [Link to Phase 3 demo (Image Search)](https://ybardapurkar.pythonanywhere.com/image_search)
+
+## Demo Video
+[Link to Demo Video](https://youtu.be/w62vYHwzs98)
 
 ## Setup on PythonAnywhere
 
 1. Create an account on PythonAnywhere
 2. Open up a bash console
 3. Type in the console `git clone https://github.com/YBardapurkar/Data_Mining_Project.git`
-4. Exit the terminal, and go to the "Web" tab to create a new web app
-5. Create a "Manual" web app (not "Flask" webapp) with Python 3.7
-6. Set "Source code" and "Working directory" to be `/home/yourname/Data_Mining_Project`
-7. Open the WSGI configuration file, set the path variable as `path = '/home/yourname/Data_Mining_Project'` and uncomment the relevant parts under the heading "Flask". Change the last line to `from hello import app as application`, as currently the name of our main file is `hello.py`
-8. Reload the web app, and it should be available at `https://yourname.pythonanywhere.com`.
+4. Install the required packages with `pip install --user -r requirements.txt`
+5. Exit the terminal, and go to the "Web" tab to create a new web app
+6. Create a "Manual" web app (not "Flask" webapp) with Python 3.7
+7. Set "Source code" and "Working directory" to be `/home/yourname/Data_Mining_Project`
+8. Open the WSGI configuration file, set the path variable as `path = '/home/yourname/Data_Mining_Project'` and uncomment the relevant parts under the heading "Flask". Change the last line to `from hello import app as application`, as currently the name of our main file is `hello.py`
+9. In the `hello.py` file, comment the last two lines `if __name__ == '__main__: app.run()'`
+9. Reload the web app, and it should be available at `https://yourname.pythonanywhere.com`.
 
 ## Setup on localhost
 
