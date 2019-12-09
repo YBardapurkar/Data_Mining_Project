@@ -85,6 +85,14 @@
 		Finally, the documents are sorted by the decreasing order of the score, and top five results are returned.<br>
 		<br>
 
+		<b>Contributions</b>
+		<ul>
+			<li>Highlighting the tokens from the search query that are searched in the inverted index</li>
+			<li>Displaying the TF and IDF scores of the tokens and Cosine Similarity of the results with the input query
+				<img src="images/search.PNG">
+			</li>
+		</ul>
+
 		<b>Challenges Faced</b><br>
 		The biggest challenge faced in the project was deploying the Flask app on PythonAnywhere. Because the pre-processing takes a very large amount of time, the deployment would always time-out. This was mitigated by using the Pickle library in python.<br>
 		Pickle is a serialization and deserialization library, which can serialize or deserialize python variables to store them into files, or read them from files. The pre-processing step was carried out in the local machine and the resulting pickle data files were created, so that whenever
